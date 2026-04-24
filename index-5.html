@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>연수원 예약 캘린더 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
+<style>
+  /* KoPub돋움체 (가능한 경우) — 네트워크 환경에 따라 Noto Sans KR로 대체 */
+  @font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/KoPubWorldDotum/KoPubWorldDotumLight.woff2') format('woff2');
+    font-weight: 300;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/KoPubWorldDotum/KoPubWorldDotumMedium.woff2') format('woff2');
+    font-weight: 500;
+    font-display: swap;
+  }
+  @font-face {
+    font-family: 'KoPubWorldDotum';
+    src: url('https://cdn.jsdelivr.net/gh/fonts-archive/KoPubWorldDotum/KoPubWorldDotumBold.woff2') format('woff2');
+    font-weight: 700;
+    font-display: swap;
+  }
+
+  :root {
+    --bg: #f6f3ee;
+    --surface: #ffffff;
+    --surface-alt: #faf8f4;
+    --ink: #1c2b3a;
+    --ink-soft: #4a5a6b;
+    --ink-mute: #8a96a4;
+    --line: #e5ddd0;
+    --line-soft: #efe9dc;
+    --brand: #1e3a5f;
+    --brand-soft: #2f5584;
+    --accent: #c2410c;
+    --sun: #b91c1c;
+    --sat: #1d4ed8;
+    --holiday: #be123c;
+    --ok: #15803d;
+    --shadow: 0 1px 2px rgba(28,43,58,0.04), 0 8px 24px rgba(28,43,58,0.06);
+    --radius: 4px;
+
+    /* 시설 색상 — 파스텔 계열 */
+    --c1: #e9d5ff; --c1-text: #6b21a8;   /* 대강당 */
+    --c2: #bfdbfe; --c2-text: #1e40af;   /* 세미나실 A */
+    --c3: #bbf7d0; --c3-text: #166534;   /* 세미나실 B */
+    --c4: #fde68a; --c4-text: #92400e;   /* 소회의실 */
+    --c5: #fecaca; --c5-text: #991b1b;   /* 숙소동 */
+    --c6: #c7d2fe; --c6-text: #3730a3;   /* 체육관 */
+    --c7: #fbcfe8; --c7-text: #9d174d;   /* 식당 */
+    --c8: #d9f99d; --c8-text: #3f6212;   /* 기타 */
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    font-family: 'KoPubWorldDotum', 'Noto Sans KR', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    -webkit-font-smoothing: antialiased;
+  }
+  button { font-family: inherit; cursor: pointer; border: none; background: none; color: inherit; }
+  input, select, textarea { font-family: inherit; font-size: inherit; color: inherit; }
+
+  /* ========== 상단 헤더 ========== */
+  .app-header {
+    background: var(--brand);
+    color: #fff;
+    padding: 28px 32px 24px;
+    border-bottom: 3px solid var(--accent);
+  }
+  .header-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .brand-block {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .brand-mark {
+    font-size: 11px;
+    letter-spacing: 0.3em;
+    color: rgba(255,255,255,0.6);
+    font-weight: 300;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 4px 10px;
+    align-self: center;
+  }
+  .brand-title {
+    font-size: 28px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .brand-sub {
+    font-size: 13px;
+    color: rgba(255,255,255,0.65);
+    font-weight: 300;
+    margin-top: 6px;
+    letter-spacing: 0.05em;
+  }
+  .header-actions {
+    display: flex;
+    gap: 8px;
+  }
+  .h-btn {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+  }
+  .h-btn:hover { background: rgba(255,255,255,0.18); }
+  .h-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .h-btn.primary:hover { background: #a8360a; }
+
+  /* ========== 툴바 ========== */
+  .toolbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--line);
+    padding: 14px 32px;
+  }
+  .toolbar-inner {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .month-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .month-label {
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    min-width: 140px;
+  }
+  .month-label .yr { color: var(--ink-mute); font-weight: 400; font-size: 16px; margin-right: 6px; }
+  .nav-btn {
+    width: 32px; height: 32px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 14px;
+    color: var(--ink-soft);
+    transition: all 0.15s;
+  }
+  .nav-btn:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .today-btn {
+    border: 1px solid var(--line);
+    padding: 6px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    background: var(--surface);
+    transition: all 0.15s;
+  }
+  .today-btn:hover { background: var(--brand); color: #fff; border-color: var(--brand); }
+
+  .toolbar-divider {
+    width: 1px;
+    height: 24px;
+    background: var(--line);
+  }
+
+  .facility-filters {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-label {
+    font-size: 11px;
+    color: var(--ink-mute);
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    margin-right: 4px;
+  }
+  .chip {
+    padding: 5px 10px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .chip .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--ink-mute);
+  }
+  .chip.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: #fff;
+  }
+  .chip.active .dot { background: #fff; }
+
+  .toolbar-right {
+    margin-left: auto;
+    display: flex;
+    gap: 8px;
+  }
+  .tb-btn {
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 500;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink-soft);
+    transition: all 0.15s;
+  }
+  .tb-btn:hover { border-color: var(--brand); color: var(--brand); }
+  .tb-btn.accent {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .tb-btn.accent:hover { background: #a8360a; border-color: #a8360a; }
+
+  /* ========== 메인 레이아웃 ========== */
+  .main {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 24px 32px 80px;
+    display: grid;
+    grid-template-columns: 1fr 340px;
+    gap: 24px;
+  }
+  @media (max-width: 1024px) {
+    .main { grid-template-columns: 1fr; }
+  }
+
+  /* ========== 캘린더 ========== */
+  .calendar {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .cal-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    background: var(--surface-alt);
+    border-bottom: 1px solid var(--line);
+  }
+  .cal-weekdays > div {
+    padding: 12px 10px;
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    color: var(--ink-soft);
+    text-align: center;
+    border-right: 1px solid var(--line-soft);
+  }
+  .cal-weekdays > div:last-child { border-right: none; }
+  .cal-weekdays > div.sun { color: var(--sun); }
+  .cal-weekdays > div.sat { color: var(--sat); }
+
+  .cal-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-auto-rows: minmax(128px, auto);
+  }
+  .cell {
+    border-right: 1px solid var(--line-soft);
+    border-bottom: 1px solid var(--line-soft);
+    padding: 8px 8px 6px;
+    position: relative;
+    cursor: pointer;
+    transition: background 0.12s;
+    min-height: 128px;
+    display: flex;
+    flex-direction: column;
+  }
+  .cell:hover { background: var(--surface-alt); }
+  .cell.other-month { background: #fbf9f4; color: var(--ink-mute); }
+  .cell.other-month:hover { background: #f5f1e8; }
+  .cell.today { background: #fff8e7; }
+  .cell.today:hover { background: #fff3d5; }
+  .cell.selected { background: #fef3c7; outline: 2px solid var(--accent); outline-offset: -2px; z-index: 2; }
+
+  .cell:nth-child(7n) { border-right: none; }
+
+  .cell-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+  }
+  .day-num {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+  .cell.sun .day-num { color: var(--sun); }
+  .cell.sat .day-num { color: var(--sat); }
+  .cell.holiday .day-num { color: var(--holiday); }
+  .cell.other-month .day-num { color: var(--ink-mute); opacity: 0.55; }
+
+  .holiday-name {
+    font-size: 10px;
+    color: var(--holiday);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+  }
+  .cell.other-month .holiday-name { opacity: 0.45; }
+
+  .bookings {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    overflow: hidden;
+  }
+  .booking-pill {
+    font-size: 10.5px;
+    font-weight: 500;
+    padding: 3px 6px;
+    line-height: 1.25;
+    border-radius: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: -0.015em;
+    border-left: 3px solid currentColor;
+  }
+  .booking-pill .ev { font-weight: 600; }
+  .booking-pill .pic { opacity: 0.75; margin-left: 3px; font-size: 9.5px; }
+
+  .more-count {
+    font-size: 10px;
+    color: var(--ink-mute);
+    font-weight: 500;
+    padding: 1px 6px;
+  }
+
+  /* ========== 사이드 패널 ========== */
+  .side {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  .panel {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    box-shadow: var(--shadow);
+  }
+  .panel-head {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--surface-alt);
+  }
+  .panel-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    color: var(--ink);
+    text-transform: uppercase;
+  }
+  .panel-title .ko {
+    font-size: 13px;
+    letter-spacing: -0.01em;
+    text-transform: none;
+    margin-right: 6px;
+  }
+  .panel-body { padding: 18px; }
+
+  .selected-date {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+  .selected-date-sub {
+    font-size: 12px;
+    color: var(--ink-mute);
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  .bk-list { display: flex; flex-direction: column; gap: 10px; }
+  .bk-card {
+    border: 1px solid var(--line);
+    padding: 12px 14px;
+    background: var(--surface);
+    position: relative;
+    border-left: 3px solid var(--brand);
+  }
+  .bk-card-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+  }
+  .bk-event {
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.015em;
+    line-height: 1.3;
+  }
+  .bk-del {
+    color: var(--ink-mute);
+    font-size: 11px;
+    padding: 2px 6px;
+    border: 1px solid var(--line);
+    transition: all 0.15s;
+    white-space: nowrap;
+  }
+  .bk-del:hover { color: #fff; background: var(--holiday); border-color: var(--holiday); }
+
+  .bk-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+  .bk-meta-row {
+    display: flex;
+    gap: 8px;
+    align-items: baseline;
+  }
+  .bk-meta-label {
+    font-size: 10px;
+    color: var(--ink-mute);
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    min-width: 44px;
+  }
+  .bk-meta-val { flex: 1; }
+  .bk-facility-tag {
+    display: inline-block;
+    padding: 2px 7px;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  .empty-state {
+    padding: 24px 16px;
+    text-align: center;
+    color: var(--ink-mute);
+    font-size: 13px;
+    border: 1px dashed var(--line);
+    background: var(--surface-alt);
+  }
+  .empty-state .icon {
+    font-size: 28px;
+    opacity: 0.35;
+    margin-bottom: 6px;
+  }
+
+  /* ========== 폼 ========== */
+  .add-form { display: flex; flex-direction: column; gap: 14px; }
+  .field { display: flex; flex-direction: column; gap: 5px; }
+  .field.row { flex-direction: row; gap: 8px; }
+  .field.row > .field { flex: 1; }
+  .field label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    color: var(--ink-mute);
+    text-transform: uppercase;
+  }
+  .field label .req { color: var(--accent); margin-left: 2px; }
+  .field input, .field select, .field textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 13px;
+    color: var(--ink);
+    transition: border-color 0.15s;
+    outline: none;
+  }
+  .field input:focus, .field select:focus, .field textarea:focus {
+    border-color: var(--brand);
+  }
+  .field textarea { resize: vertical; min-height: 60px; font-family: inherit; }
+
+  .submit-btn {
+    background: var(--brand);
+    color: #fff;
+    padding: 11px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    transition: background 0.15s;
+  }
+  .submit-btn:hover { background: var(--brand-soft); }
+  .submit-btn:disabled { background: var(--ink-mute); cursor: not-allowed; }
+
+  /* ========== 연간 보기 ========== */
+  .year-view {
+    display: none;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .year-view.active { display: grid; }
+  .calendar.main-hidden { display: none; }
+
+  .mini-month {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    padding: 14px;
+    cursor: pointer;
+    transition: all 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .mini-month:hover {
+    border-color: var(--brand);
+    transform: translateY(-2px);
+  }
+  .mini-month-title {
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    letter-spacing: -0.01em;
+  }
+  .mini-month-title .count {
+    font-size: 10px;
+    color: var(--ink-mute);
+    font-weight: 500;
+    letter-spacing: 0;
+    margin-left: 6px;
+  }
+  .mini-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 1px;
+    font-size: 10px;
+  }
+  .mini-grid > div {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ink-soft);
+    position: relative;
+  }
+  .mini-grid > div.head {
+    font-size: 9px;
+    color: var(--ink-mute);
+    font-weight: 600;
+  }
+  .mini-grid > div.head.sun { color: var(--sun); }
+  .mini-grid > div.head.sat { color: var(--sat); }
+  .mini-grid > div.has-booking {
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .mini-grid > div.has-booking::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    width: 4px; height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .mini-grid > div.sun { color: var(--sun); }
+  .mini-grid > div.sat { color: var(--sat); }
+  .mini-grid > div.holiday { color: var(--holiday); font-weight: 600; }
+  .mini-grid > div.today { background: var(--brand); color: #fff; border-radius: 2px; font-weight: 700; }
+
+  /* ========== 시설 관리 ========== */
+  .facility-list { display: flex; flex-direction: column; gap: 6px; }
+  .facility-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    font-size: 12px;
+  }
+  .facility-item .swatch {
+    width: 14px; height: 14px;
+    border-radius: 2px;
+  }
+  .facility-item .name {
+    flex: 1;
+    font-weight: 500;
+  }
+  .facility-item button {
+    color: var(--ink-mute);
+    font-size: 11px;
+    padding: 2px 4px;
+  }
+  .facility-item button:hover { color: var(--holiday); }
+  .add-facility-row { display: flex; gap: 6px; margin-top: 8px; }
+  .add-facility-row input {
+    flex: 1;
+    padding: 7px 10px;
+    border: 1px solid var(--line);
+    font-size: 12px;
+    outline: none;
+  }
+  .add-facility-row input:focus { border-color: var(--brand); }
+  .add-facility-row button {
+    padding: 7px 12px;
+    border: 1px solid var(--brand);
+    background: var(--brand);
+    color: #fff;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  /* ========== 토스트 ========== */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 18px;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.25s;
+    z-index: 1000;
+  }
+  .toast.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+  }
+  .toast.error { background: var(--holiday); }
+  .toast.success { background: var(--ok); }
+
+  /* ========== 모달 ========== */
+  .modal-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(28, 43, 58, 0.55);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 20px;
+  }
+  .modal-backdrop.show { display: flex; }
+  .modal {
+    background: var(--surface);
+    max-width: 440px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .modal-head {
+    padding: 18px 22px;
+    border-bottom: 1px solid var(--line);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .modal-title {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .modal-close {
+    font-size: 20px;
+    color: var(--ink-mute);
+    width: 28px; height: 28px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .modal-close:hover { color: var(--ink); }
+  .modal-body { padding: 22px; }
+
+  /* ========== 범례 ========== */
+  .legend {
+    display: flex;
+    gap: 14px;
+    flex-wrap: wrap;
+    font-size: 11px;
+    color: var(--ink-soft);
+    padding: 10px 0 0;
+  }
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .legend-dot {
+    width: 10px; height: 10px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+  .legend-dot.today-dot { background: #fff8e7; border: 1px solid var(--line); }
+  .legend-dot.holiday-dot { background: var(--holiday); }
+
+  /* 스크롤바 */
+  ::-webkit-scrollbar { width: 8px; height: 8px; }
+  ::-webkit-scrollbar-track { background: var(--bg); }
+  ::-webkit-scrollbar-thumb { background: var(--line); border-radius: 4px; }
+  ::-webkit-scrollbar-thumb:hover { background: var(--ink-mute); }
+
+  @media (max-width: 768px) {
+    .app-header, .toolbar, .main { padding-left: 16px; padding-right: 16px; }
+    .cal-grid { grid-auto-rows: minmax(90px, auto); }
+    .cell { min-height: 90px; padding: 6px 5px; }
+    .day-num { font-size: 12px; }
+    .booking-pill { font-size: 9.5px; padding: 2px 4px; }
+    .year-view.active { grid-template-columns: repeat(2, 1fr); }
+    .brand-title { font-size: 22px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-inner">
+    <div class="brand-block">
+      <span class="brand-mark">TRAINING CENTER</span>
+      <div>
+        <div class="brand-title">연수원 예약 캘린더</div>
+        <div class="brand-sub">2026 · RESERVATION MANAGEMENT SYSTEM</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="h-btn" id="viewToggle">📅 연간보기</button>
+      <button class="h-btn primary" id="openAdd">＋ 예약 추가</button>
+    </div>
+  </div>
+</header>
+
+<div class="toolbar">
+  <div class="toolbar-inner">
+    <div class="month-nav">
+      <button class="nav-btn" id="prevMonth">‹</button>
+      <div class="month-label"><span class="yr" id="yearLbl">2026</span><span id="monthLbl">1월</span></div>
+      <button class="nav-btn" id="nextMonth">›</button>
+      <button class="today-btn" id="todayBtn">오늘</button>
+    </div>
+
+    <div class="toolbar-divider"></div>
+
+    <div class="facility-filters" id="facilityFilters">
+      <span class="filter-label">시설</span>
+      <!-- chips injected -->
+    </div>
+
+    <div class="toolbar-right">
+      <button class="tb-btn" id="manageFacilities">시설 관리</button>
+      <button class="tb-btn" id="exportBtn">내보내기</button>
+      <button class="tb-btn" id="importBtn">불러오기</button>
+      <input type="file" id="importFile" accept=".json" style="display:none;">
+    </div>
+  </div>
+</div>
+
+<main class="main">
+  <section>
+    <div class="calendar" id="calendarRoot">
+      <div class="cal-weekdays">
+        <div class="sun">SUN</div><div>MON</div><div>TUE</div><div>WED</div>
+        <div>THU</div><div>FRI</div><div class="sat">SAT</div>
+      </div>
+      <div class="cal-grid" id="calGrid"></div>
+    </div>
+    <div class="year-view" id="yearView"></div>
+    <div class="legend">
+      <div class="legend-item"><span class="legend-dot today-dot"></span>오늘</div>
+      <div class="legend-item"><span class="legend-dot holiday-dot"></span>공휴일</div>
+      <div class="legend-item"><span class="legend-dot"></span>예약 있음</div>
+      <div class="legend-item">날짜 클릭 → 예약 상세 · 날짜 더블클릭 → 바로 추가</div>
+    </div>
+  </section>
+
+  <aside class="side">
+    <!-- 선택한 날짜 예약 -->
+    <div class="panel">
+      <div class="panel-head">
+        <div>
+          <div class="selected-date" id="selDate">날짜를 선택하세요</div>
+          <div class="selected-date-sub" id="selDateSub">캘린더에서 날짜를 클릭하면 예약이 표시됩니다</div>
+        </div>
+      </div>
+      <div class="panel-body">
+        <div id="bookingList" class="bk-list"></div>
+      </div>
+    </div>
+
+    <!-- 빠른 추가 -->
+    <div class="panel">
+      <div class="panel-head">
+        <div class="panel-title"><span class="ko">예약 추가</span>QUICK ADD</div>
+      </div>
+      <div class="panel-body">
+        <form class="add-form" id="quickForm">
+          <div class="field row">
+            <div class="field">
+              <label>시작일<span class="req">*</span></label>
+              <input type="date" id="qStart" min="2026-01-01" max="2026-12-31" required>
+            </div>
+            <div class="field">
+              <label>종료일<span class="req">*</span></label>
+              <input type="date" id="qEnd" min="2026-01-01" max="2026-12-31" required>
+            </div>
+          </div>
+          <div class="field">
+            <label>시설<span class="req">*</span></label>
+            <select id="qFacility" required></select>
+          </div>
+          <div class="field">
+            <label>행사명<span class="req">*</span></label>
+            <input type="text" id="qEvent" placeholder="예: 신입사원 OJT 교육" required maxlength="60">
+          </div>
+          <div class="field">
+            <label>담당자<span class="req">*</span></label>
+            <input type="text" id="qPic" placeholder="예: 인사혁신팀 홍길동" required maxlength="40">
+          </div>
+          <div class="field">
+            <label>연락처</label>
+            <input type="text" id="qContact" placeholder="예: 내선 1234 / 010-1234-5678" maxlength="40">
+          </div>
+          <div class="field">
+            <label>메모</label>
+            <textarea id="qMemo" placeholder="비고 사항 (선택)" maxlength="200"></textarea>
+          </div>
+          <button type="submit" class="submit-btn">예약 등록</button>
+        </form>
+      </div>
+    </div>
+  </aside>
+</main>
+
+<!-- 시설 관리 모달 -->
+<div class="modal-backdrop" id="facilityModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">시설 관리</div>
+      <button class="modal-close" data-close>×</button>
+    </div>
+    <div class="modal-body">
+      <div class="facility-list" id="facilityListEditor"></div>
+      <div class="add-facility-row">
+        <input type="text" id="newFacilityName" placeholder="새 시설 이름" maxlength="20">
+        <button id="addFacilityBtn">추가</button>
+      </div>
+      <div style="font-size:11px; color:var(--ink-mute); margin-top:14px; line-height:1.5;">
+        · 시설을 삭제해도 기존 예약은 보관됩니다.<br>
+        · 시설 이름은 예약 데이터에 함께 저장됩니다.
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 예약 추가 모달 -->
+<div class="modal-backdrop" id="addModal">
+  <div class="modal">
+    <div class="modal-head">
+      <div class="modal-title">새 예약 등록</div>
+      <button class="modal-close" data-close>×</button>
+    </div>
+    <div class="modal-body">
+      <form class="add-form" id="modalForm">
+        <div class="field row">
+          <div class="field">
+            <label>시작일<span class="req">*</span></label>
+            <input type="date" id="mStart" min="2026-01-01" max="2026-12-31" required>
+          </div>
+          <div class="field">
+            <label>종료일<span class="req">*</span></label>
+            <input type="date" id="mEnd" min="2026-01-01" max="2026-12-31" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>시설<span class="req">*</span></label>
+          <select id="mFacility" required></select>
+        </div>
+        <div class="field">
+          <label>행사명<span class="req">*</span></label>
+          <input type="text" id="mEvent" required maxlength="60">
+        </div>
+        <div class="field">
+          <label>담당자<span class="req">*</span></label>
+          <input type="text" id="mPic" required maxlength="40">
+        </div>
+        <div class="field">
+          <label>연락처</label>
+          <input type="text" id="mContact" maxlength="40">
+        </div>
+        <div class="field">
+          <label>메모</label>
+          <textarea id="mMemo" maxlength="200"></textarea>
+        </div>
+        <button type="submit" class="submit-btn">예약 등록</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ========================================================================
+// 상수 / 설정
+// ========================================================================
+const YEAR = 2026;
+const STORAGE_KEY = 'training_calendar_2026';
+const FACILITY_KEY = 'training_calendar_facilities';
+const WEEKDAY_KO = ['일', '월', '화', '수', '목', '금', '토'];
+
+// 2026년 대한민국 공휴일
+const HOLIDAYS_2026 = {
+  '2026-01-01': '신정',
+  '2026-02-16': '설날 연휴',
+  '2026-02-17': '설날',
+  '2026-02-18': '설날 연휴',
+  '2026-03-01': '삼일절',
+  '2026-03-02': '대체공휴일',
+  '2026-05-05': '어린이날',
+  '2026-05-24': '부처님오신날',
+  '2026-05-25': '대체공휴일',
+  '2026-06-06': '현충일',
+  '2026-08-15': '광복절',
+  '2026-08-17': '대체공휴일',
+  '2026-09-24': '추석 연휴',
+  '2026-09-25': '추석',
+  '2026-09-26': '추석 연휴',
+  '2026-09-28': '대체공휴일',
+  '2026-10-03': '개천절',
+  '2026-10-05': '대체공휴일',
+  '2026-10-09': '한글날',
+  '2026-12-25': '성탄절'
+};
+
+// 기본 시설 목록
+const DEFAULT_FACILITIES = [
+  { id: 'f1', name: '대강당', color: 'c1' },
+  { id: 'f2', name: '세미나실 A', color: 'c2' },
+  { id: 'f3', name: '세미나실 B', color: 'c3' },
+  { id: 'f4', name: '소회의실', color: 'c4' },
+  { id: 'f5', name: '숙소동', color: 'c5' },
+  { id: 'f6', name: '체육관', color: 'c6' }
+];
+const COLOR_POOL = ['c1','c2','c3','c4','c5','c6','c7','c8'];
+
+// ========================================================================
+// 상태
+// ========================================================================
+let state = {
+  bookings: [],     // [{id, start, end, facilityId, event, pic, contact, memo}]
+  facilities: [],
+  currentYear: YEAR,
+  currentMonth: 0,  // 0-based
+  selectedDate: null,
+  activeFacilities: new Set(),  // id set ('all' means all)
+  viewMode: 'month' // 'month' | 'year'
+};
+
+// ========================================================================
+// 저장 / 불러오기
+// ========================================================================
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) state.bookings = JSON.parse(raw) || [];
+  } catch (e) { state.bookings = []; }
+
+  try {
+    const rawF = localStorage.getItem(FACILITY_KEY);
+    state.facilities = rawF ? JSON.parse(rawF) : [...DEFAULT_FACILITIES];
+    if (!Array.isArray(state.facilities) || !state.facilities.length) {
+      state.facilities = [...DEFAULT_FACILITIES];
+    }
+  } catch (e) { state.facilities = [...DEFAULT_FACILITIES]; }
+
+  state.activeFacilities = new Set(state.facilities.map(f => f.id));
+
+  // 현재 날짜가 2026이면 그 달로, 아니면 1월
+  const now = new Date();
+  if (now.getFullYear() === YEAR) {
+    state.currentMonth = now.getMonth();
+  }
+}
+function saveBookings() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state.bookings));
+}
+function saveFacilities() {
+  localStorage.setItem(FACILITY_KEY, JSON.stringify(state.facilities));
+}
+
+// ========================================================================
+// 유틸
+// ========================================================================
+function pad(n) { return String(n).padStart(2, '0'); }
+function ymd(d) {
+  if (typeof d === 'string') return d;
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
+}
+function parseYmd(s) {
+  const [y, m, d] = s.split('-').map(Number);
+  return new Date(y, m-1, d);
+}
+function formatKoDate(s) {
+  const d = parseYmd(s);
+  return `${d.getFullYear()}년 ${d.getMonth()+1}월 ${d.getDate()}일 (${WEEKDAY_KO[d.getDay()]})`;
+}
+function formatRangeKo(start, end) {
+  if (start === end) return formatKoDate(start);
+  const a = parseYmd(start), b = parseYmd(end);
+  const sameY = a.getFullYear() === b.getFullYear();
+  const sameM = sameY && a.getMonth() === b.getMonth();
+  if (sameM) {
+    return `${a.getFullYear()}년 ${a.getMonth()+1}월 ${a.getDate()}일(${WEEKDAY_KO[a.getDay()]}) ~ ${b.getDate()}일(${WEEKDAY_KO[b.getDay()]})`;
+  }
+  return `${formatKoDate(start)} ~ ${formatKoDate(end)}`;
+}
+function uid() { return 'b_' + Date.now().toString(36) + '_' + Math.random().toString(36).slice(2, 7); }
+function dateInRange(dateStr, startStr, endStr) {
+  return dateStr >= startStr && dateStr <= endStr;
+}
+function datesBetween(startStr, endStr) {
+  const result = [];
+  const s = parseYmd(startStr), e = parseYmd(endStr);
+  const cur = new Date(s);
+  while (cur <= e) {
+    result.push(ymd(cur));
+    cur.setDate(cur.getDate() + 1);
+  }
+  return result;
+}
+function getFacility(id) {
+  return state.facilities.find(f => f.id === id) || { id: '?', name: '(삭제된 시설)', color: 'c8' };
+}
+function nextColor() {
+  const used = state.facilities.map(f => f.color);
+  for (const c of COLOR_POOL) if (!used.includes(c)) return c;
+  return COLOR_POOL[state.facilities.length % COLOR_POOL.length];
+}
+
+// ========================================================================
+// 렌더: 툴바 / 필터
+// ========================================================================
+function renderFilterChips() {
+  const wrap = document.getElementById('facilityFilters');
+  // keep label
+  wrap.innerHTML = '<span class="filter-label">시설</span>';
+
+  const allActive = state.activeFacilities.size === state.facilities.length;
+  const allChip = document.createElement('button');
+  allChip.className = 'chip' + (allActive ? ' active' : '');
+  allChip.innerHTML = `<span class="dot"></span>전체`;
+  allChip.onclick = () => {
+    if (allActive) state.activeFacilities.clear();
+    else state.activeFacilities = new Set(state.facilities.map(f => f.id));
+    render();
+  };
+  wrap.appendChild(allChip);
+
+  state.facilities.forEach(f => {
+    const chip = document.createElement('button');
+    const active = state.activeFacilities.has(f.id);
+    chip.className = 'chip' + (active ? ' active' : '');
+    chip.innerHTML = `<span class="dot" style="background:var(--${f.color})"></span>${escapeHtml(f.name)}`;
+    chip.onclick = () => {
+      if (active) state.activeFacilities.delete(f.id);
+      else state.activeFacilities.add(f.id);
+      render();
+    };
+    wrap.appendChild(chip);
+  });
+}
+
+function renderFacilitySelects() {
+  ['qFacility', 'mFacility'].forEach(id => {
+    const sel = document.getElementById(id);
+    const prev = sel.value;
+    sel.innerHTML = '';
+    state.facilities.forEach(f => {
+      const o = document.createElement('option');
+      o.value = f.id;
+      o.textContent = f.name;
+      sel.appendChild(o);
+    });
+    if (prev && state.facilities.find(f => f.id === prev)) sel.value = prev;
+  });
+}
+
+// ========================================================================
+// 렌더: 월 캘린더
+// ========================================================================
+function renderMonthLabel() {
+  document.getElementById('yearLbl').textContent = state.currentYear;
+  document.getElementById('monthLbl').textContent = (state.currentMonth + 1) + '월';
+}
+
+function bookingsOnDate(dateStr) {
+  return state.bookings
+    .filter(b => dateInRange(dateStr, b.start, b.end))
+    .filter(b => state.activeFacilities.has(b.facilityId) || !state.facilities.find(f => f.id === b.facilityId));
+}
+
+function renderCalendar() {
+  renderMonthLabel();
+  const grid = document.getElementById('calGrid');
+  grid.innerHTML = '';
+
+  const first = new Date(state.currentYear, state.currentMonth, 1);
+  const firstWeekday = first.getDay();
+  const daysInMonth = new Date(state.currentYear, state.currentMonth + 1, 0).getDate();
+  const daysPrev = new Date(state.currentYear, state.currentMonth, 0).getDate();
+  const todayStr = ymd(new Date());
+
+  // 총 42칸 (6주) — 전/당/후 월
+  const cells = [];
+  // prev
+  for (let i = firstWeekday - 1; i >= 0; i--) {
+    const d = daysPrev - i;
+    const m = state.currentMonth === 0 ? 12 : state.currentMonth;
+    const y = state.currentMonth === 0 ? state.currentYear - 1 : state.currentYear;
+    cells.push({ y, m, d, otherMonth: true });
+  }
+  // current
+  for (let d = 1; d <= daysInMonth; d++) {
+    cells.push({ y: state.currentYear, m: state.currentMonth + 1, d, otherMonth: false });
+  }
+  // next
+  const total = Math.ceil(cells.length / 7) * 7;
+  let nd = 1;
+  while (cells.length < Math.max(total, 35)) {
+    const m = state.currentMonth === 11 ? 1 : state.currentMonth + 2;
+    const y = state.currentMonth === 11 ? state.currentYear + 1 : state.currentYear;
+    cells.push({ y, m, d: nd++, otherMonth: true });
+  }
+
+  cells.forEach(c => {
+    const dateStr = `${c.y}-${pad(c.m)}-${pad(c.d)}`;
+    const dateObj = parseYmd(dateStr);
+    const weekday = dateObj.getDay();
+    const isHoliday = HOLIDAYS_2026[dateStr];
+    const dayBookings = bookingsOnDate(dateStr);
+
+    const cell = document.createElement('div');
+    cell.className = 'cell';
+    if (c.otherMonth) cell.classList.add('other-month');
+    if (dateStr === todayStr) cell.classList.add('today');
+    if (dateStr === state.selectedDate) cell.classList.add('selected');
+    if (weekday === 0) cell.classList.add('sun');
+    if (weekday === 6) cell.classList.add('sat');
+    if (isHoliday) cell.classList.add('holiday');
+
+    const head = document.createElement('div');
+    head.className = 'cell-head';
+    head.innerHTML = `<span class="day-num">${c.d}</span>` +
+      (isHoliday ? `<span class="holiday-name">${escapeHtml(isHoliday)}</span>` : '');
+    cell.appendChild(head);
+
+    const bkWrap = document.createElement('div');
+    bkWrap.className = 'bookings';
+
+    const MAX_VIS = 3;
+    dayBookings.slice(0, MAX_VIS).forEach(b => {
+      const f = getFacility(b.facilityId);
+      const pill = document.createElement('div');
+      pill.className = 'booking-pill';
+      pill.style.background = `var(--${f.color})`;
+      pill.style.color = `var(--${f.color}-text)`;
+      pill.innerHTML = `<span class="ev">${escapeHtml(b.event)}</span><span class="pic">· ${escapeHtml(b.pic)}</span>`;
+      pill.title = `${b.event} / ${f.name} / ${b.pic}`;
+      bkWrap.appendChild(pill);
+    });
+    if (dayBookings.length > MAX_VIS) {
+      const more = document.createElement('div');
+      more.className = 'more-count';
+      more.textContent = `+ ${dayBookings.length - MAX_VIS}건 더보기`;
+      bkWrap.appendChild(more);
+    }
+    cell.appendChild(bkWrap);
+
+    cell.onclick = () => selectDate(dateStr);
+    cell.ondblclick = (e) => {
+      e.preventDefault();
+      openAddModal(dateStr);
+    };
+
+    grid.appendChild(cell);
+  });
+}
+
+// ========================================================================
+// 렌더: 연간 뷰
+// ========================================================================
+function renderYearView() {
+  const wrap = document.getElementById('yearView');
+  wrap.innerHTML = '';
+  const todayStr = ymd(new Date());
+
+  for (let m = 0; m < 12; m++) {
+    const monthBookings = state.bookings.filter(b => {
+      if (!state.activeFacilities.has(b.facilityId) && state.facilities.find(f => f.id === b.facilityId)) return false;
+      // month overlap check
+      const start = parseYmd(b.start), end = parseYmd(b.end);
+      const monthStart = new Date(YEAR, m, 1);
+      const monthEnd = new Date(YEAR, m + 1, 0);
+      return !(end < monthStart || start > monthEnd);
+    });
+
+    const tile = document.createElement('div');
+    tile.className = 'mini-month';
+    tile.onclick = () => {
+      state.currentMonth = m;
+      state.viewMode = 'month';
+      updateViewMode();
+      render();
+    };
+
+    const daysInMonth = new Date(YEAR, m + 1, 0).getDate();
+    const firstWeekday = new Date(YEAR, m, 1).getDay();
+
+    let grid = '';
+    WEEKDAY_KO.forEach((w, i) => {
+      grid += `<div class="head${i===0?' sun':''}${i===6?' sat':''}">${w}</div>`;
+    });
+    for (let i = 0; i < firstWeekday; i++) grid += '<div></div>';
+    for (let d = 1; d <= daysInMonth; d++) {
+      const ds = `${YEAR}-${pad(m+1)}-${pad(d)}`;
+      const wd = new Date(YEAR, m, d).getDay();
+      const hasBk = monthBookings.some(b => dateInRange(ds, b.start, b.end));
+      const classes = [];
+      if (wd === 0) classes.push('sun');
+      if (wd === 6) classes.push('sat');
+      if (HOLIDAYS_2026[ds]) classes.push('holiday');
+      if (ds === todayStr) classes.push('today');
+      if (hasBk) classes.push('has-booking');
+      grid += `<div class="${classes.join(' ')}">${d}</div>`;
+    }
+
+    tile.innerHTML = `
+      <div class="mini-month-title">${m+1}월<span class="count">${monthBookings.length}건</span></div>
+      <div class="mini-grid">${grid}</div>
+    `;
+    wrap.appendChild(tile);
+  }
+}
+
+function updateViewMode() {
+  const isYear = state.viewMode === 'year';
+  document.getElementById('calendarRoot').classList.toggle('main-hidden', isYear);
+  document.getElementById('yearView').classList.toggle('active', isYear);
+  document.getElementById('viewToggle').textContent = isYear ? '📅 월간보기' : '📅 연간보기';
+}
+
+// ========================================================================
+// 렌더: 선택된 날짜 예약 목록
+// ========================================================================
+function renderSelectedDate() {
+  const dEl = document.getElementById('selDate');
+  const subEl = document.getElementById('selDateSub');
+  const listEl = document.getElementById('bookingList');
+
+  if (!state.selectedDate) {
+    dEl.textContent = '날짜를 선택하세요';
+    subEl.textContent = '캘린더에서 날짜를 클릭하면 예약이 표시됩니다';
+    listEl.innerHTML = '';
+    return;
+  }
+
+  const d = parseYmd(state.selectedDate);
+  dEl.textContent = `${d.getMonth()+1}월 ${d.getDate()}일 ${WEEKDAY_KO[d.getDay()]}요일`;
+  const hol = HOLIDAYS_2026[state.selectedDate];
+  subEl.textContent = hol ? `${state.currentYear}년 · ${hol}` : `${state.currentYear}년`;
+
+  const bks = state.bookings
+    .filter(b => dateInRange(state.selectedDate, b.start, b.end))
+    .sort((a, b) => a.start.localeCompare(b.start));
+
+  if (!bks.length) {
+    listEl.innerHTML = `
+      <div class="empty-state">
+        <div class="icon">◯</div>
+        <div>예약 없음 — 예약 가능</div>
+        <div style="font-size:11px; margin-top:4px; color:var(--ink-mute)">하단 "예약 추가" 폼에서 등록</div>
+      </div>`;
+    return;
+  }
+
+  listEl.innerHTML = '';
+  bks.forEach(b => {
+    const f = getFacility(b.facilityId);
+    const card = document.createElement('div');
+    card.className = 'bk-card';
+    card.style.borderLeftColor = `var(--${f.color}-text)`;
+    card.innerHTML = `
+      <div class="bk-card-head">
+        <div class="bk-event">${escapeHtml(b.event)}</div>
+        <button class="bk-del" data-id="${b.id}">삭제</button>
+      </div>
+      <div class="bk-meta">
+        <div class="bk-meta-row">
+          <span class="bk-meta-label">시설</span>
+          <span class="bk-meta-val">
+            <span class="bk-facility-tag" style="background:var(--${f.color});color:var(--${f.color}-text)">${escapeHtml(f.name)}</span>
+          </span>
+        </div>
+        <div class="bk-meta-row">
+          <span class="bk-meta-label">기간</span>
+          <span class="bk-meta-val">${formatRangeKo(b.start, b.end)}</span>
+        </div>
+        <div class="bk-meta-row">
+          <span class="bk-meta-label">담당자</span>
+          <span class="bk-meta-val">${escapeHtml(b.pic)}</span>
+        </div>
+        ${b.contact ? `<div class="bk-meta-row"><span class="bk-meta-label">연락처</span><span class="bk-meta-val">${escapeHtml(b.contact)}</span></div>` : ''}
+        ${b.memo ? `<div class="bk-meta-row"><span class="bk-meta-label">메모</span><span class="bk-meta-val" style="white-space:pre-wrap">${escapeHtml(b.memo)}</span></div>` : ''}
+      </div>
+    `;
+    listEl.appendChild(card);
+  });
+
+  listEl.querySelectorAll('.bk-del').forEach(btn => {
+    btn.onclick = (e) => {
+      e.stopPropagation();
+      deleteBooking(btn.dataset.id);
+    };
+  });
+}
+
+// ========================================================================
+// 액션
+// ========================================================================
+function selectDate(dateStr) {
+  state.selectedDate = dateStr;
+  document.getElementById('qStart').value = dateStr;
+  document.getElementById('qEnd').value = dateStr;
+  // month jump if needed
+  const d = parseYmd(dateStr);
+  if (d.getFullYear() === state.currentYear && d.getMonth() !== state.currentMonth) {
+    state.currentMonth = d.getMonth();
+  }
+  render();
+}
+
+function addBooking(data) {
+  if (!data.start || !data.end || !data.event || !data.pic || !data.facilityId) {
+    toast('필수 항목을 입력하세요', 'error'); return false;
+  }
+  if (data.end < data.start) {
+    toast('종료일이 시작일보다 빠를 수 없습니다', 'error'); return false;
+  }
+  if (data.start < '2026-01-01' || data.end > '2026-12-31') {
+    toast('2026년 범위 내 날짜만 등록 가능합니다', 'error'); return false;
+  }
+
+  // 시설 중복 체크
+  const conflict = state.bookings.find(b =>
+    b.facilityId === data.facilityId &&
+    !(b.end < data.start || b.start > data.end)
+  );
+  if (conflict) {
+    const f = getFacility(conflict.facilityId);
+    if (!confirm(`⚠ ${f.name} — 동일 기간에 "${conflict.event}" 예약이 있습니다.\n그래도 등록하시겠습니까?`)) {
+      return false;
+    }
+  }
+
+  state.bookings.push({ id: uid(), ...data });
+  saveBookings();
+  toast('예약이 등록되었습니다', 'success');
+  return true;
+}
+
+function deleteBooking(id) {
+  const b = state.bookings.find(x => x.id === id);
+  if (!b) return;
+  if (!confirm(`"${b.event}" 예약을 삭제하시겠습니까?`)) return;
+  state.bookings = state.bookings.filter(x => x.id !== id);
+  saveBookings();
+  toast('예약이 삭제되었습니다', 'success');
+  render();
+}
+
+// ========================================================================
+// 시설 관리
+// ========================================================================
+function renderFacilityEditor() {
+  const wrap = document.getElementById('facilityListEditor');
+  wrap.innerHTML = '';
+  state.facilities.forEach(f => {
+    const item = document.createElement('div');
+    item.className = 'facility-item';
+    item.innerHTML = `
+      <span class="swatch" style="background:var(--${f.color})"></span>
+      <span class="name">${escapeHtml(f.name)}</span>
+      <button data-id="${f.id}">삭제</button>
+    `;
+    item.querySelector('button').onclick = () => {
+      if (state.facilities.length <= 1) {
+        toast('최소 1개 시설이 필요합니다', 'error'); return;
+      }
+      if (!confirm(`"${f.name}" 시설을 삭제하시겠습니까?\n(기존 예약은 유지됩니다)`)) return;
+      state.facilities = state.facilities.filter(x => x.id !== f.id);
+      state.activeFacilities.delete(f.id);
+      saveFacilities();
+      renderFacilityEditor();
+      render();
+      toast('삭제되었습니다', 'success');
+    };
+    wrap.appendChild(item);
+  });
+}
+
+// ========================================================================
+// Import / Export
+// ========================================================================
+function exportJSON() {
+  const data = {
+    meta: { version: 1, exportedAt: new Date().toISOString(), year: YEAR },
+    facilities: state.facilities,
+    bookings: state.bookings
+  };
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `연수원예약_${YEAR}_${ymd(new Date())}.json`;
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('데이터를 내보냈습니다', 'success');
+}
+
+function importJSON(file) {
+  const reader = new FileReader();
+  reader.onload = (e) => {
+    try {
+      const data = JSON.parse(e.target.result);
+      if (!data.bookings || !Array.isArray(data.bookings)) throw 0;
+      if (!confirm('현재 데이터를 불러온 파일로 덮어씌우시겠습니까?')) return;
+      if (data.facilities && Array.isArray(data.facilities)) {
+        state.facilities = data.facilities;
+        state.activeFacilities = new Set(data.facilities.map(f => f.id));
+      }
+      state.bookings = data.bookings;
+      saveBookings();
+      saveFacilities();
+      render();
+      toast('데이터를 불러왔습니다', 'success');
+    } catch (err) {
+      toast('올바르지 않은 파일입니다', 'error');
+    }
+  };
+  reader.readAsText(file);
+}
+
+// ========================================================================
+// 토스트
+// ========================================================================
+let toastTimer;
+function toast(msg, type = '') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast show ' + type;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { el.classList.remove('show'); }, 2200);
+}
+
+function escapeHtml(s) {
+  if (s == null) return '';
+  return String(s)
+    .replace(/&/g, '&amp;').replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;').replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+// ========================================================================
+// 모달
+// ========================================================================
+function openAddModal(dateStr) {
+  document.getElementById('mStart').value = dateStr || ymd(new Date(YEAR, state.currentMonth, 1));
+  document.getElementById('mEnd').value = dateStr || ymd(new Date(YEAR, state.currentMonth, 1));
+  document.getElementById('mEvent').value = '';
+  document.getElementById('mPic').value = '';
+  document.getElementById('mContact').value = '';
+  document.getElementById('mMemo').value = '';
+  if (state.facilities.length) document.getElementById('mFacility').value = state.facilities[0].id;
+  document.getElementById('addModal').classList.add('show');
+  setTimeout(() => document.getElementById('mEvent').focus(), 50);
+}
+function closeModals() {
+  document.querySelectorAll('.modal-backdrop').forEach(m => m.classList.remove('show'));
+}
+
+// ========================================================================
+// 이벤트 바인딩
+// ========================================================================
+function bindEvents() {
+  // 월 네비게이션
+  document.getElementById('prevMonth').onclick = () => {
+    if (state.currentMonth > 0) { state.currentMonth--; render(); }
+    else toast('2026년 1월입니다', 'error');
+  };
+  document.getElementById('nextMonth').onclick = () => {
+    if (state.currentMonth < 11) { state.currentMonth++; render(); }
+    else toast('2026년 12월입니다', 'error');
+  };
+  document.getElementById('todayBtn').onclick = () => {
+    const now = new Date();
+    if (now.getFullYear() === YEAR) {
+      state.currentMonth = now.getMonth();
+      selectDate(ymd(now));
+    } else {
+      state.currentMonth = 0;
+      selectDate('2026-01-01');
+    }
+  };
+
+  // 뷰 토글
+  document.getElementById('viewToggle').onclick = () => {
+    state.viewMode = state.viewMode === 'month' ? 'year' : 'month';
+    updateViewMode();
+    if (state.viewMode === 'year') renderYearView();
+  };
+
+  // 예약 추가 모달
+  document.getElementById('openAdd').onclick = () => openAddModal(state.selectedDate);
+  document.querySelectorAll('[data-close]').forEach(b => b.onclick = closeModals);
+  document.querySelectorAll('.modal-backdrop').forEach(m => {
+    m.onclick = (e) => { if (e.target === m) closeModals(); };
+  });
+
+  // 빠른 추가 폼
+  document.getElementById('quickForm').onsubmit = (e) => {
+    e.preventDefault();
+    const ok = addBooking({
+      start: document.getElementById('qStart').value,
+      end: document.getElementById('qEnd').value,
+      facilityId: document.getElementById('qFacility').value,
+      event: document.getElementById('qEvent').value.trim(),
+      pic: document.getElementById('qPic').value.trim(),
+      contact: document.getElementById('qContact').value.trim(),
+      memo: document.getElementById('qMemo').value.trim()
+    });
+    if (ok) {
+      document.getElementById('qEvent').value = '';
+      document.getElementById('qPic').value = '';
+      document.getElementById('qContact').value = '';
+      document.getElementById('qMemo').value = '';
+      render();
+    }
+  };
+
+  // 모달 폼
+  document.getElementById('modalForm').onsubmit = (e) => {
+    e.preventDefault();
+    const ok = addBooking({
+      start: document.getElementById('mStart').value,
+      end: document.getElementById('mEnd').value,
+      facilityId: document.getElementById('mFacility').value,
+      event: document.getElementById('mEvent').value.trim(),
+      pic: document.getElementById('mPic').value.trim(),
+      contact: document.getElementById('mContact').value.trim(),
+      memo: document.getElementById('mMemo').value.trim()
+    });
+    if (ok) {
+      closeModals();
+      render();
+    }
+  };
+
+  // 시설 관리
+  document.getElementById('manageFacilities').onclick = () => {
+    renderFacilityEditor();
+    document.getElementById('facilityModal').classList.add('show');
+  };
+  document.getElementById('addFacilityBtn').onclick = () => {
+    const inp = document.getElementById('newFacilityName');
+    const name = inp.value.trim();
+    if (!name) { toast('시설 이름을 입력하세요', 'error'); return; }
+    if (state.facilities.some(f => f.name === name)) {
+      toast('이미 존재하는 시설입니다', 'error'); return;
+    }
+    const newF = { id: 'f_' + Date.now().toString(36), name, color: nextColor() };
+    state.facilities.push(newF);
+    state.activeFacilities.add(newF.id);
+    saveFacilities();
+    inp.value = '';
+    renderFacilityEditor();
+    render();
+    toast('시설이 추가되었습니다', 'success');
+  };
+
+  // Import / Export
+  document.getElementById('exportBtn').onclick = exportJSON;
+  document.getElementById('importBtn').onclick = () => document.getElementById('importFile').click();
+  document.getElementById('importFile').onchange = (e) => {
+    if (e.target.files[0]) importJSON(e.target.files[0]);
+    e.target.value = '';
+  };
+
+  // ESC 모달 닫기
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeModals();
+  });
+}
+
+// ========================================================================
+// 메인 렌더
+// ========================================================================
+function render() {
+  renderFilterChips();
+  renderCalendar();
+  renderSelectedDate();
+  if (state.viewMode === 'year') renderYearView();
+}
+
+// ========================================================================
+// 초기화
+// ========================================================================
+loadState();
+renderFacilitySelects();
+bindEvents();
+render();
+updateViewMode();
+
+// 초기 날짜 선택 (오늘 또는 1월 1일)
+const now = new Date();
+if (now.getFullYear() === YEAR) {
+  selectDate(ymd(now));
+} else {
+  selectDate('2026-01-01');
+}
+</script>
+</body>
+</html>
